@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 function NavLink({ href, children }) {
   const path = usePathname();
+  console.log(href, path.startsWith(href));
   return (
     <li className={path.startsWith(href) ? "active" : undefined}>
       <Link href={href}>{children}</Link>

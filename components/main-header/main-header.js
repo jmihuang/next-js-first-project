@@ -21,10 +21,10 @@ const MainHeader = () => {
             <Link href="/">純粹。很好。</Link>
             <div className="menu-wrapper scoll-down-show">
               <ul className="nav-menu hide-on-med-and-down">
-                <NavLink href="about">關於我們</NavLink>
-                <NavLink href="products">產品介紹</NavLink>
-                <NavLink href="news">最新消息</NavLink>
-                <NavLink href="contacts">聯絡我們</NavLink>
+                <NavLink href="/about">關於我們</NavLink>
+                <NavLink href="/products">產品介紹</NavLink>
+                <NavLink href="/news">最新消息</NavLink>
+                <NavLink href="/contacts">聯絡我們</NavLink>
               </ul>
             </div>
             <ul className="nav-cart right">
