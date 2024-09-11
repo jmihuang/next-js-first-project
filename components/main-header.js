@@ -1,12 +1,13 @@
 import React from "react";
 import Link from "next/link";
+import styles from "./main-header.module.css";
 
 const MainHeader = () => {
   return (
     <header>
       <div id="nav-bar">
         <nav>
-          <div className="container nav-wrapper">
+          <div className={`container ${styles.navWrapper}`}>
             <Link href="/" className="brand-logo">
               自然淨化,環境清潔
             </Link>
