@@ -1,7 +1,7 @@
 import "@/app/globals.css";
-import "@/app/asset/materialize.css";
-import "@/app/asset/style.css";
-import MainHeader from "@/components/main-header";
+import "@/app/assets/materialize.css";
+import "@/app/assets/style.css";
+import MainHeader from "@/components/main-header/main-header";
 
 export const metadata = {
   title: "Create Next App",
@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
     <html lang="zh-tw">
       <body>
         <MainHeader />
-        {children}
+        <main className="container">{children}</main>
       </body>
     </html>
   );

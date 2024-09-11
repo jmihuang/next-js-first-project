@@ -1,15 +1,21 @@
 import React from "react";
 import Link from "next/link";
 import styles from "./main-header.module.css";
-
+import logoImg from "/app/assets/image/logo.png";
+import Image from "next/image";
 const MainHeader = () => {
   return (
     <header>
       <div id="nav-bar">
         <nav>
-          <div className={`container ${styles.navWrapper}`}>
-            <Link href="/" className="brand-logo">
-              自然淨化,環境清潔
+          <div className={`container ${styles["nav-wrapper"]}`}>
+            <Link href="/">
+              <Image
+                src={logoImg}
+                alt="自然淨化,環境清潔"
+                width={126}
+                height={43}
+              />
             </Link>
             <div className="menu-wrapper scoll-down-show">
               <ul className="nav-menu hide-on-med-and-down">

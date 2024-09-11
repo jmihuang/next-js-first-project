@@ -1,5 +1,5 @@
 /* 主要容器和導航 */
 .nav-wrapper {
-  margin: 1rem 0;
   width: 100%;
+  display: flex;
 }
