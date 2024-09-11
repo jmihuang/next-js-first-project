@@ -3,6 +3,7 @@ import Link from "next/link";
 import styles from "./main-header.module.css";
 import logoImg from "/app/assets/image/logo.png";
 import Image from "next/image";
+import NavLink from "./nav-link";
 const MainHeader = () => {
   return (
     <header>
@@ -17,23 +18,13 @@ const MainHeader = () => {
                 height={43}
               />
             </Link>
+            <Link href="/">純粹。很好。</Link>
             <div className="menu-wrapper scoll-down-show">
               <ul className="nav-menu hide-on-med-and-down">
-                <li>
-                  <Link href="/pages/about">關於我們</Link>
-                </li>
-                <li className="active">
-                  <Link href="/items">產品介紹</Link>
-                </li>
-                <li>
-                  <Link href="/news">最新消息</Link>
-                </li>
-                <li>
-                  <Link href="/technologies">技術說明</Link>
-                </li>
-                <li>
-                  <Link href="/contacts/new">聯絡我們</Link>
-                </li>
+                <NavLink href="about">關於我們</NavLink>
+                <NavLink href="products">產品介紹</NavLink>
+                <NavLink href="news">最新消息</NavLink>
+                <NavLink href="contacts">聯絡我們</NavLink>
               </ul>
             </div>
             <ul className="nav-cart right">
