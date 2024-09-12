@@ -6,7 +6,7 @@ const products = [
     name: "介觀植礦防護液",
     engName: "Natural All-Purpose Protective Spray",
     capacity: "50ml / 1.69fl.oz",
-    image: "/image/bath-containers-plant-table.png",
+    image: "/assets/image/bath-containers-plant-table.png",
     slug: "1",
     price: "ntd.450",
   },

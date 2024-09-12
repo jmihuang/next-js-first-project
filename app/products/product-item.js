@@ -1,10 +1,10 @@
 import Image from "next/image";
-function productItem({ alt, imgSrc, price, name, engName, capacity, slug }) {
+function productItem({ alt, image, price, name, engName, capacity, slug }) {
   return (
     <div className="product_item">
       <div className="image-box image-hover">
         <a className="product-item-image" href={`/products/${slug}`}>
-          <Image className="responsive-img" src={imgSrc} alt={alt} fill />
+          <Image className="responsive-img" src={image} alt={alt} fill />
         </a>
         <div className="name_price info">
           <a className="name" href="#">
