@@ -2,9 +2,15 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { getProduct } from "@/lib/catalogue";
+import { notFound } from "next/navigation";
 
 async function Product({ params }) {
   const product = await getProduct(params.slug);
+  //找不到資料頁面
+  if (!product) {
+    notFound();
+    return;
+  }
   product.desc = product.desc.replace(/\n/g, "<br/>");
   return (
     <div className="product_detail">
