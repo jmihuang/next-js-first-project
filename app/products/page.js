@@ -6,16 +6,14 @@ import LoadingSpinner from "@/components/loading-spinner";
 import { getProducts } from "@/lib/catalogue";
 async function LoadProducts() {
   const products = await getProducts();
-  {
-    products.map((product, idx) => {
-      return <ProductItem key={idx} id={idx} {...product} />;
-    });
-  }
+  return products.map((product, idx) => {
+    return <ProductItem key={idx} id={idx} {...product} />;
+  });
 }
 
 export default function Product() {
   return (
-    <main className="product">
+    <div className="product">
       <h1>All Products</h1>
       <ul className="flex gap-2">
         <li>
@@ -33,6 +31,6 @@ export default function Product() {
           <LoadProducts />
         </Suspense>
       </ProductGrid>
-    </main>
+    </div>
   );
 }
