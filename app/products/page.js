@@ -6,13 +6,11 @@ import LoadingSpinner from "@/components/loading-spinner";
 import { getProducts } from "@/lib/catalogue";
 async function LoadProducts() {
   const products = await getProducts();
-  return (
-    <ProductGrid>
-      {products.map((product, idx) => {
-        return <ProductItem key={idx} id={idx} {...product} />;
-      })}
-    </ProductGrid>
-  );
+  {
+    products.map((product, idx) => {
+      return <ProductItem key={idx} id={idx} {...product} />;
+    });
+  }
 }
 
 export default function Product() {
@@ -30,9 +28,11 @@ export default function Product() {
           <Link href="/products/product-3">花生好事蜜糖吐司</Link>
         </li>
       </ul>
-      <Suspense fallback={<LoadingSpinner />}>
-        <LoadProducts />
-      </Suspense>
+      <ProductGrid>
+        <Suspense fallback={<LoadingSpinner />}>
+          <LoadProducts />
+        </Suspense>
+      </ProductGrid>
     </main>
   );
 }
