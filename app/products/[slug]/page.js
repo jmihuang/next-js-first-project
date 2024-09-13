@@ -5,51 +5,47 @@ import { getProduct } from "@/lib/catalogue";
 
 async function Product({ params }) {
   const product = await getProduct(params.slug);
-  console.log("product", product);
   return (
     <div className="product_detail">
-      <h1>{params.slug}</h1>
       <div className="row">
         <div className="col s12 m6">
           <div
             className="main-image"
             id="main-show"
-            style={{ backgroundImage: "url('/images/product6-1.jpg')" }}
+            style={{
+              backgroundImage: `url(${product.image})`,
+            }}
           ></div>
           <div className="image-list">
-            {[
-              "/images/product6-1.jpg",
-              "/images/product6-1.jpg",
-              "/images/product6-1.jpg",
-              "/images/product6-1.jpg",
-              "/images/product6-1.jpg",
-            ].map((url, index) => (
-              <div
-                className={`image-item ${index === 4 ? "active" : ""}`}
-                key={index}
-              >
-                <a className="img-square" data-url={url}>
-                  <Image
-                    className="responsive-img"
-                    src={url}
-                    alt="自然淨化,環境清潔"
-                    width={100}
-                    height={100}
-                  />
-                </a>
-              </div>
-            ))}
+            {[product.image, product.image, product.image, product.image].map(
+              (url, index) => (
+                <div
+                  className={`image-item ${index === 4 ? "active" : ""}`}
+                  key={index}
+                >
+                  <a className="img-square" data-url={url}>
+                    <Image
+                      className="responsive-img"
+                      src={url}
+                      alt={product.alt}
+                      width={100}
+                      height={100}
+                    />
+                  </a>
+                </div>
+              )
+            )}
           </div>
         </div>
         <div className="col s12 m6">
           <div className="product-infor">
             <div className="section-block">
-              <h5 className="name">介觀植礦防護液</h5>
-              <h5 className="en_name">Natural All-Purpose Protective Spray</h5>
-              <h4 className="price">ntd.450</h4>
+              <h5 className="name">{product.name}</h5>
+              <h5 className="en_name">{product.engName}</h5>
+              <h4 className="price">ntd.{product.price}</h4>
             </div>
             <div className="section-block">
-              <div className="size">50ml / 1.69fl.oz</div>
+              <div className="size">{product.capacity}</div>
               <small className="comment"> </small>
             </div>
             <div>
@@ -120,34 +116,13 @@ async function Product({ params }) {
               </div>
             </div>
             <div className="body">
-              <div className="section-block">
-                隨身攜帶的天然清潔防護好幫手！生活中的每一天，都在與有害因子作戰；威脅無所不在，需要全方位的防護，為自己及您所愛的人加一層保障。讓MINEQUO米奈可強化防護力，讓保護無所不在。
-              </div>
-              <div className="section-block">
-                <b>使用說明：</b>
-                <p>
-                  均勻噴灑欲清潔之物體及部位，加強清潔防護，不需沖洗。注意事項：請避免放置於陽光直射、高溫場所，並以常溫方式保存。如使用時發生身體不適或異常時，請停止使用並立刻就醫。
-                </p>
-              </div>
+              <div className="section-block">{product.desc}</div>
             </div>
           </div>
         </div>
       </div>
       <h5>Description</h5>
-      <div className="body">
-        <b className="section-title">植礦力量</b>
-        <p>
-          從櫻花樹、玫瑰花、菊花等植物中
-          提取天然礦物質成分，透過日本獨家專利技術，將礦物質以介觀的狀態保存下來。介觀狀態的礦物質具有形成電場及帶電的特性，透過電磁波及電力而達成除菌效果!
-        </p>
-        <Image
-          className="responsive-img"
-          src="/svg/tech-1.svg"
-          alt="植礦力量"
-          width={300}
-          height={200}
-        />
-      </div>
+      <div className="body">...</div>
       <h5>You May Also Like</h5>
       <div className="products_items">
         {[...Array(6)].map((_, index) => (
@@ -167,7 +142,7 @@ async function Product({ params }) {
                 <Link href="#" className="name">
                   <b>介觀植礦防護液</b>
                 </Link>
-                <b className="price">ntd.450</b>
+                <b className="price">ntd.{product.price}</b>
               </div>
               <div className="en info">
                 <small className="en_name">
