@@ -1,10 +1,21 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
 import ProductGrid from "./product-grid";
 import ProductItem from "./product-item";
+import LoadingSpinner from "@/components/loading-spinner";
 import { getProducts } from "@/lib/catalogue";
-export default async function Product() {
+async function LoadProducts() {
   const products = await getProducts();
+  return (
+    <ProductGrid>
+      {products.map((product, idx) => {
+        return <ProductItem key={idx} id={idx} {...product} />;
+      })}
+    </ProductGrid>
+  );
+}
+
+export default function Product() {
   return (
     <main className="product">
       <h1>All Products</h1>
@@ -19,11 +30,9 @@ export default async function Product() {
           <Link href="/products/product-3">花生好事蜜糖吐司</Link>
         </li>
       </ul>
-      <ProductGrid>
-        {products.map((product, idx) => {
-          return <ProductItem key={idx} id={idx} {...product} />;
-        })}
-      </ProductGrid>
+      <Suspense fallback={<LoadingSpinner />}>
+        <LoadProducts />
+      </Suspense>
     </main>
   );
 }
