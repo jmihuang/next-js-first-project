@@ -1,10 +1,14 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { getProduct } from "@/lib/catalogue";
 
-function Product({ params }) {
+async function Product({ params }) {
+  const product = await getProduct(params.slug);
+  console.log("product", product);
   return (
     <div className="product_detail">
+      <h1>{params.slug}</h1>
       <div className="row">
         <div className="col s12 m6">
           <div

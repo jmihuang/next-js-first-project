@@ -205,14 +205,15 @@ db.prepare(
 // 插入數據
 async function initData() {
   const stmt = db.prepare(`
-        INSERT INTO catalogue (alt, name, engName, capacity, image, slug, price) VALUES (
+        INSERT INTO catalogue (alt, name, engName, capacity, image, slug, price,desc) VALUES (
             @alt,
             @name,
             @engName,
             @capacity,
             @image,
             @slug,
-            @price
+            @price,
+            @desc
         )
     `);
 
