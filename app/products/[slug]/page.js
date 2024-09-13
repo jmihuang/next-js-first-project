@@ -5,6 +5,7 @@ import { getProduct } from "@/lib/catalogue";
 
 async function Product({ params }) {
   const product = await getProduct(params.slug);
+  product.desc = product.desc.replace(/\n/g, "<br/>");
   return (
     <div className="product_detail">
       <div className="row">
@@ -116,7 +117,12 @@ async function Product({ params }) {
               </div>
             </div>
             <div className="body">
-              <div className="section-block">{product.desc}</div>
+              <div
+                className="section-block"
+                dangerouslySetInnerHTML={{
+                  __html: product.desc,
+                }}
+              />
             </div>
           </div>
         </div>
