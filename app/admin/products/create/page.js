@@ -2,7 +2,7 @@
 import React from "react";
 import { Form, Input, Button, Upload, InputNumber } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-
+import ImagePicker from "@/components/form/imagePicker";
 const CreateProductItem = () => {
   return (
     <Form
@@ -48,11 +48,17 @@ const CreateProductItem = () => {
       </Form.Item>
 
       {/* Image Upload */}
-      <Form.Item label="Product Image" name="image">
+      {/* <Form.Item label="Product Image" name="image">
         <Upload name="image" listType="picture" maxCount={1}>
           <Button icon={<UploadOutlined />}>Upload Image</Button>
         </Upload>
-      </Form.Item>
+      </Form.Item> */}
+      <ImagePicker
+        label="請上傳商品圖片"
+        uploadFormatAccept="image/*"
+        uploadType="image"
+        name="upload-product-image"
+      />
 
       {/* Slug */}
       <Form.Item

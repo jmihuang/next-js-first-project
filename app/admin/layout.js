@@ -1,7 +1,6 @@
 import "@/app/globals.css";
 import "@/app/assets/materialize.css";
 import "@/app/assets/style.css";
-import MainHeader from "@/components/main-header/main-header";
 
 export default function AdminLayout({ children }) {
   return (
