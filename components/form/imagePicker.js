@@ -9,6 +9,7 @@ function imagePicker({ label, uploadFormatAccept, uploadType, name }) {
   const onImageUpload = (event) => {
     const files = event.target.files;
     if (files.length === 0) {
+      setPickedImages([]);
       return;
     }
     const imgsSrc = [];
