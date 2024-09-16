@@ -3,12 +3,13 @@ import React from "react";
 import { Form, Input, Button, Upload, InputNumber } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import ImagePicker from "@/components/form/imagePicker";
+import { uploadProduct } from "@/lib/actions";
 const CreateProductItem = () => {
   return (
     <Form
       name="product_form"
       layout="vertical"
-      //   onFinish={handleSubmit}
+      onFinish={uploadProduct}
       initialValues={{ price: 0 }}
     >
       {/* Alt */}
@@ -48,17 +49,17 @@ const CreateProductItem = () => {
       </Form.Item>
 
       {/* Image Upload */}
-      {/* <Form.Item label="Product Image" name="image">
+      <Form.Item label="Product Image" name="image">
         <Upload name="image" listType="picture" maxCount={1}>
           <Button icon={<UploadOutlined />}>Upload Image</Button>
         </Upload>
-      </Form.Item> */}
-      <ImagePicker
+      </Form.Item>
+      {/* <ImagePicker
         label="請上傳商品圖片"
         uploadFormatAccept="image/*"
         uploadType="image"
-        name="upload-product-image"
-      />
+        name="image"
+      /> */}
 
       {/* Slug */}
       <Form.Item
