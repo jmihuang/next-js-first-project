@@ -4,6 +4,7 @@ import { Form, Input, Button, Upload, InputNumber } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import ImagePicker from "@/components/form/imagePicker";
 import { uploadProduct } from "@/lib/actions";
+
 const CreateProductItem = () => {
   return (
     <Form
