@@ -1,46 +1,30 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Form, Input, Button, Upload, InputNumber } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import ImagePicker from "@/components/form/imagePicker";
 import { uploadProduct } from "@/lib/actions";
 
 const CreateProductItem = () => {
   const [files, setFiles] = useState(null);
-  let formData = new FormData();
-  const handleFileUpload = ({ file }) => {
-    const formData = new FormData();
-    formData.append("image", file);
-    // Send image to the server
-    fetch("/api/uploadImage", {
-      method: "POST",
-      body: formData,
-      // No need for headers, FormData automatically sets them
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error uploading image");
-        }
-        return response.json(); // Assuming the server responds with JSON
-      })
-      .then((data) => {
-        console.log("Image uploaded successfully", data);
-      })
-      .catch((error) => {
-        console.error("Error uploading image:", error);
-      });
-  };
 
-  const handleSubmit = (values) => {};
+  const handleSubmit = (values) => {
+    const formData = new FormData();
+    console.log(values);
+    formData.append("image", values.image.file.originFileObj);
+    formData.append("alt", values.alt);
+    formData.append("name", values.name);
+    formData.append("engName", values.engName);
+    formData.append("capacity", values.capacity);
+    formData.append("price", values.price);
+    formData.append("desc", values.desc);
+    uploadProduct(formData);
+  };
 
   return (
     <Form
       name="product_form"
       layout="vertical"
-      onFinish={(value) => {
-        formData.append("file", files.fileList);
-        uploadProduct(formData);
-      }}
+      onFinish={handleSubmit}
       initialValues={{ price: 0 }}
     >
       {/* Alt */}
@@ -88,25 +72,10 @@ const CreateProductItem = () => {
           multiple={false}
           showUploadList={false}
           accept="image/png,image/gif,image/jpeg"
-          onChange={handleFileUpload}
+          // onChange={handleFileUpload}
         >
           <Button icon={<UploadOutlined />}>Upload Image</Button>
         </Upload>
-      </Form.Item>
-      {/* <ImagePicker
-        label="請上傳商品圖片"
-        uploadFormatAccept="image/*"
-        uploadType="image"
-        name="image"
-      /> */}
-
-      {/* Slug */}
-      <Form.Item
-        label="Slug"
-        name="slug"
-        rules={[{ required: true, message: "Slug is required!" }]}
-      >
-        <Input placeholder="Enter product slug" />
       </Form.Item>
 
       {/* Price */}
