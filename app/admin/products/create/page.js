@@ -70,9 +70,8 @@ const CreateProductItem = () => {
           listType="picture"
           maxCount={1}
           multiple={false}
-          showUploadList={false}
+          showUploadList={true}
           accept="image/png,image/gif,image/jpeg"
-          // onChange={handleFileUpload}
         >
           <Button icon={<UploadOutlined />}>Upload Image</Button>
         </Upload>
