@@ -5,11 +5,15 @@ import { UploadOutlined } from "@ant-design/icons";
 import { uploadProduct } from "@/lib/actions";
 
 const CreateProductItem = () => {
-  const [files, setFiles] = useState(null);
-
+  const [pending, setPending] = useState(false);
+  const [fileList, setFileList] = useState([]);
+  // Handle the file change event
+  const handleChange = ({ fileList }) => {
+    setFileList(fileList); // Update the state when fileList changes
+  };
   const handleSubmit = (values) => {
+    setPending(true);
     const formData = new FormData();
-    console.log(values);
     formData.append("image", values.image.file.originFileObj);
     formData.append("alt", values.alt);
     formData.append("name", values.name);
@@ -18,6 +22,9 @@ const CreateProductItem = () => {
     formData.append("price", values.price);
     formData.append("desc", values.desc);
     uploadProduct(formData);
+    setTimeout(() => {
+      setPending(false);
+    }, 1000);
   };
 
   return (
@@ -70,8 +77,10 @@ const CreateProductItem = () => {
           listType="picture"
           maxCount={1}
           multiple={false}
+          fileList={fileList}
           showUploadList={true}
           accept="image/png,image/gif,image/jpeg"
+          onChange={handleChange}
         >
           <Button icon={<UploadOutlined />}>Upload Image</Button>
         </Upload>
@@ -97,9 +106,13 @@ const CreateProductItem = () => {
 
       {/* Submit Button */}
       <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Submit
+        <Button type="primary" htmlType="submit" disabled={pending}>
+          {pending ? "Submitting..." : "Submit"}
         </Button>
+        {/* <Button type="primary" htmlType="submit" disabled={pending}>
+          {pending.toString()}
+          {pending ? "Submitting..." : "Submit"}
+        </Button> */}
       </Form.Item>
     </Form>
   );
