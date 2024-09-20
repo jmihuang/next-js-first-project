@@ -4,6 +4,20 @@ import Link from "next/link";
 import { getProduct } from "@/lib/catalogue";
 import { notFound } from "next/navigation";
 
+export async function generateMetadata({ params }) {
+  const product = await getProduct(params.slug);
+
+  if (!product) {
+    notFound();
+    return;
+  }
+
+  return {
+    title: product.name,
+    description: product.desc,
+  };
+}
+
 async function Product({ params }) {
   const product = await getProduct(params.slug);
   //找不到資料頁面
