@@ -6,8 +6,6 @@ export async function POST(req) {
   try {
     // Parse the FormData
     const formData = await req.formData();
-    console.log("formData", formData);
-    return NextResponse.json({ message: "Product created successfully!" });
     // Extract individual form fields
     const alt = formData.get("alt"); // Extracting 'alt' field
     const name = formData.get("name"); // Extracting 'name' field
