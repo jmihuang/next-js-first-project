@@ -30,9 +30,9 @@ export async function POST(req) {
     await saveProduct(productData);
     return NextResponse.json({ message: "Product created successfully!" });
   } catch (error) {
-    // return NextResponse.json(
-    //   { message: "Error creating product" },
-    //   { status: 500 }
-    // );
+    return NextResponse.json(
+      { message: "Error creating product" },
+      { status: 500 }
+    );
   }
 }
