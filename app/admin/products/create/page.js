@@ -2,26 +2,68 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Upload, InputNumber } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { uploadProduct } from "@/lib/actions";
 
 const CreateProductItem = () => {
   const [pending, setPending] = useState(false);
+  const [form] = Form.useForm(); // Form instance for possible reset or control
   const [fileList, setFileList] = useState([]);
+
   // Handle the file change event
-  const handleChange = ({ fileList }) => {
-    setFileList(fileList); // Update the state when fileList changes
+  const handleUpload = async ({ fileList: newFileList }) => {
+    setFileList(newFileList);
   };
-  const handleSubmit = (values) => {
-    setPending(true);
+
+  const coverImageArrayBuffer = async () => {
+    const reader = new FileReader();
+
+    // Loop through the fileList and append each file as ArrayBuffer to FormData
+    for (const file of fileList) {
+      const originFileObj = file.originFileObj; //Get the actual file
+      const reader = new FileReader();
+      // Use a Promise to handle the asynchronous FileReader operation
+      const arrayBuffer = await new Promise((resolve, reject) => {
+        reader.onload = (event) => resolve(event.target.result);
+        reader.onerror = (error) => reject(error);
+        reader.readAsArrayBuffer(file); // Convert file to ArrayBuffer
+      });
+
+      formData.append("images", new Blob([arrayBuffer]), file.name);
+    }
+  };
+
+  const handleSubmit = async (values) => {
+    //Create a FormData object
     const formData = new FormData();
-    formData.append("image", values.image.file.originFileObj);
+    // Append other form data as a string
     formData.append("alt", values.alt);
     formData.append("name", values.name);
     formData.append("engName", values.engName);
     formData.append("capacity", values.capacity);
     formData.append("price", values.price);
-    formData.append("desc", values.desc);
-    uploadProduct(formData);
+    for (const file of fileList) {
+      formData.append("image", file.originFileObj);
+    } // Append each file as Blob to FormData
+
+    try {
+      const response = await fetch("/api/products/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // Set appropriate content type for JSON
+        },
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to create product: ${response.statusText}`);
+      }
+
+      const result = await response.json(); // Parse the JSON response
+      console.log("Product created successfully:", result);
+      form.resetFields(); // Reset form on success
+      setFileList([]); // Clear the fileList state
+    } catch (error) {
+      console.error("Error creating product:", error);
+    }
+
     setTimeout(() => {
       setPending(false);
     }, 1000);
@@ -29,6 +71,7 @@ const CreateProductItem = () => {
 
   return (
     <Form
+      form={form}
       name="product_form"
       layout="vertical"
       onFinish={handleSubmit}
@@ -80,7 +123,7 @@ const CreateProductItem = () => {
           fileList={fileList}
           showUploadList={true}
           accept="image/png,image/gif,image/jpeg"
-          onChange={handleChange}
+          onChange={handleUpload}
         >
           <Button icon={<UploadOutlined />}>Upload Image</Button>
         </Upload>
