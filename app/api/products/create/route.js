@@ -1,38 +1,50 @@
-// app/api/products/create.js
 import { NextResponse } from "next/server";
+import { IncomingForm } from "formidable";
+import fs from "fs";
+import path from "path";
 import { saveProduct } from "@/lib/catalogue";
 
 export async function POST(req) {
-  try {
-    // Parse the FormData
-    const formData = await req.formData();
-    // Extract individual form fields
-    const alt = formData.get("alt"); // Extracting 'alt' field
-    const name = formData.get("name"); // Extracting 'name' field
-    const engName = formData.get("engName"); // Extracting 'engName' field
-    const capacity = formData.get("capacity"); // Extracting 'capacity' field
-    const price = formData.get("price"); // Extracting 'price' field
+  if (req.method === "POST") {
+    try {
+      // Initialize formidable to handle multipart form data
+      const form = new IncomingForm({
+        uploadDir: path.join(process.cwd(), "/public"),
+        keepExtensions: true, // Keep the file extension
+      });
+      // Parse the form data
+      form.parse(req, async (err, fields, files) => {
+        if (err) {
+          res.status(500).json({ message: "Error parsing form data" });
+          return;
+        }
 
-    // Extract the image file
-    const image = formData.get("image"); // Assuming 'image' is the field name
+        // Access fields and files
+        const { alt, name, engName, capacity, price, desc } = fields;
+        const image = files.image; // Assuming file input name is 'file'
 
-    // Example: Save product details to a database (without actual file saving)
-    const productData = {
-      alt,
-      name,
-      engName,
-      capacity,
-      price,
-      imageName: image ? image.name : null, // Save image name if available
-    };
-
-    // Simulate saving to the database
-    await saveProduct(productData);
-    return NextResponse.json({ message: "Product created successfully!" });
-  } catch (error) {
-    return NextResponse.json(
-      { message: "Error creating product" },
-      { status: 500 }
-    );
+        // Example: returning uploaded file path
+        const productData = {
+          alt,
+          name,
+          engName,
+          capacity,
+          price,
+          desc,
+          image,
+        };
+        await saveProduct(productData);
+      });
+      return NextResponse.json(
+        { message: "Form submission successful" },
+        { status: 200 }
+      );
+    } catch (error) {
+      console.error("Error parsing form data", error);
+      return NextResponse.json(
+        { message: "Error parsing form data", error: error.message },
+        { status: 500 }
+      );
+    }
   }
 }

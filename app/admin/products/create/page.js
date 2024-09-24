@@ -32,26 +32,18 @@ const CreateProductItem = () => {
   };
 
   const handleSubmit = async (values) => {
-    //Create a FormData object
+    // Convert values to FormData
     const formData = new FormData();
-    // Append other form data as a string
-    formData.append("alt", values.alt);
-    formData.append("name", values.name);
-    formData.append("engName", values.engName);
-    formData.append("capacity", values.capacity);
-    formData.append("price", values.price);
-    for (const file of fileList) {
-      formData.append("image", file.originFileObj);
-    } // Append each file as Blob to FormData
+    Object.keys(values).forEach((key) => {
+      formData.append(key, values[key]);
+    });
 
     try {
       const response = await fetch("/api/products/create", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json", // Set appropriate content type for JSON
-        },
         body: formData,
       });
+
       if (!response.ok) {
         throw new Error(`Failed to create product: ${response.statusText}`);
       }
@@ -76,6 +68,7 @@ const CreateProductItem = () => {
       layout="vertical"
       onFinish={handleSubmit}
       initialValues={{ price: 0 }}
+      // encType="multipart/form-data"
     >
       {/* Alt */}
       <Form.Item
