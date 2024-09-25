@@ -8806,7 +8806,7 @@ nav ul > li:hover > a {
   flex: auto;
   margin-top: 2rem;
   margin-left: 0;
-  border-bottom: solid 1px #5f7563;
+  /* border-bottom: solid 1px #5f7563; */
 }
 @media screen and (min-width: 601px) {
   .list .list_content {
