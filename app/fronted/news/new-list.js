@@ -6,8 +6,8 @@ export default function NewList({ news }) {
     <>
       {news.map((item, idx) => (
         <div key={idx} className="list">
-          <div class="update-date">
-            <div class="year">{item.date.split("-")[0]}</div>
+          <div className="update-date">
+            <div className="year">{item.date.split("-")[0]}</div>
           </div>
           <div className="img w-[269px] h-[180px] overflow-hidden flex items-center justify-center">
             <Image

@@ -4,7 +4,9 @@ export default function LatestNewsPage() {
   return (
     <>
       <h5>You May Also Be Interested</h5>
-      <NewsList news={DUMMY_NEWS} />
+      <div className="latest">
+        <NewsList news={DUMMY_NEWS} />
+      </div>
     </>
   );
 }

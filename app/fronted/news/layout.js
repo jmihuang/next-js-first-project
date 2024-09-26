@@ -1,8 +1,7 @@
-export default function ArchiveLayout({ filterLink, archive, latest }) {
+export default function ArchiveLayout({ archive, latest }) {
   return (
     <div>
       <h1>News</h1>
-      <div>{filterLink}</div>
       <div>{archive}</div>
       <div>{latest}</div>
     </div>
