@@ -25,6 +25,11 @@ export default function FilteredNewsPage({ params }) {
     loadedNews = getNewsForYear();
   }
 
+  if (loadedNews.length === 0) {
+    console.error("Loaded News:", loadedNews); // Check what data is being received
+    throw new Error("Invalid Filter");
+  }
+
   return (
     <>
       <ul className="flex flex-wrap mb-6">
