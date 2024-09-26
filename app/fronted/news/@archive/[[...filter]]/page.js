@@ -1,6 +1,5 @@
 import NewsList from "@/app/fronted/news/new-list";
 import Link from "next/link";
-import { DUMMY_NEWS } from "@/dummy-news";
 import {
   getAvailableNewsMonths,
   getAvailableNewsYears,
@@ -10,8 +9,8 @@ import {
 
 export default function FilteredNewsPage({ params }) {
   const filter = params?.filter || null;
-  const selectedYear = filter?.[0];
-  const selectedMonth = filter?.[1];
+  const selectedYear = filter?.[0] || null;
+  const selectedMonth = filter?.[1] || null;
   const yearsLinks = getAvailableNewsYears();
   const monthsLinks = getAvailableNewsMonths(selectedYear).sort();
   let loadedNews = [];
@@ -25,20 +24,38 @@ export default function FilteredNewsPage({ params }) {
     loadedNews = getNewsForYear();
   }
 
-  if (loadedNews.length === 0) {
-    console.error("Loaded News:", loadedNews); // Check what data is being received
-    throw new Error("Invalid Filter");
-  }
-
   return (
     <>
       <ul className="flex flex-wrap mb-6">
-        <li className="border-2 px-4 py-2 mr-4 cursor-pointer">
-          <Link href="/fronted/news/">ALL</Link>
+        <li
+          className={`border-2 mr-4 cursor-pointer  ${
+            selectedYear === null ? "bg-primary" : ""
+          }`}
+        >
+          <Link
+            href="/fronted/news/"
+            className={`${
+              selectedYear === null ? " text-white bold" : ""
+            } px-4 py-2 block`}
+          >
+            ALL
+          </Link>
         </li>
         {yearsLinks.map((link) => (
-          <li key={link} className="border-2 px-4 py-2 mr-4 cursor-pointer">
-            <Link href={`/fronted/news/${link}`}>{link}</Link>
+          <li
+            key={link}
+            className={`border-2 mr-4 cursor-pointer ${
+              +selectedYear === link ? "bg-primary" : ""
+            }`}
+          >
+            <Link
+              href={`/fronted/news/${link}`}
+              className={`${
+                +selectedYear === link ? " text-white bold" : ""
+              } px-4 py-2 block`}
+            >
+              {link}
+            </Link>
           </li>
         ))}
       </ul>
@@ -46,8 +63,20 @@ export default function FilteredNewsPage({ params }) {
       <ul className="flex flex-wrap mb-6">
         {monthsLinks.length > 0 &&
           monthsLinks.map((link) => (
-            <li key={link} className="border-2 px-4 py-2 mr-4 cursor-pointer">
-              <Link href={`/fronted/news/${selectedYear}/${link}`}>{link}</Link>
+            <li
+              key={link}
+              className={`border-2 mr-4 cursor-pointer ${
+                +selectedMonth === link ? "bg-primary" : ""
+              }`}
+            >
+              <Link
+                href={`/fronted/news/${selectedYear}/${link}`}
+                className={`${
+                  +selectedMonth === link ? " text-white bold" : ""
+                } px-4 py-2 block`}
+              >
+                {link}
+              </Link>
             </li>
           ))}
       </ul>
