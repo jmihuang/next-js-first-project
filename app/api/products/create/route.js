@@ -1,50 +1,58 @@
 import { NextResponse } from "next/server";
-import { IncomingForm } from "formidable";
-import fs from "fs";
+import { writeFile } from "fs/promises";
 import path from "path";
 import { saveProduct } from "@/lib/catalogue";
 
-export async function POST(req) {
-  if (req.method === "POST") {
+export const config = {
+    api: {
+        bodyParser: false,
+    },
+};
+
+export async function POST(request) {
     try {
-      // Initialize formidable to handle multipart form data
-      const form = new IncomingForm({
-        uploadDir: path.join(process.cwd(), "/public"),
-        keepExtensions: true, // Keep the file extension
-      });
-      // Parse the form data
-      form.parse(req, async (err, fields, files) => {
-        if (err) {
-          res.status(500).json({ message: "Error parsing form data" });
-          return;
+        const formData = await request.formData();
+        const file = formData.get("file");
+
+        if (!file) {
+            return NextResponse.json(
+                { error: "No file uploaded" },
+                { status: 400 }
+            );
         }
 
-        // Access fields and files
-        const { alt, name, engName, capacity, price, desc } = fields;
-        const image = files.image; // Assuming file input name is 'file'
+        const bytes = await file.arrayBuffer();
+        const buffer = Buffer.from(bytes);
 
-        // Example: returning uploaded file path
+        const filename = file.name.replace(/\s/g, "-");
+        const filepath = path.join(process.cwd(), "public", filename);
+        await writeFile(filepath, buffer);
+
         const productData = {
-          alt,
-          name,
-          engName,
-          capacity,
-          price,
-          desc,
-          image,
+            alt: formData.get("alt"),
+            name: formData.get("name"),
+            engName: formData.get("engName"),
+            capacity: formData.get("capacity"),
+            price: formData.get("price"),
+            desc: formData.get("desc"),
+            image: {
+                filepath: filepath,
+                originalFilename: file.name,
+                mimetype: file.type,
+            },
         };
+
         await saveProduct(productData);
-      });
-      return NextResponse.json(
-        { message: "Form submission successful" },
-        { status: 200 }
-      );
+
+        return NextResponse.json(
+            { message: "Form submission successful" },
+            { status: 200 }
+        );
     } catch (error) {
-      console.error("Error parsing form data", error);
-      return NextResponse.json(
-        { message: "Error parsing form data", error: error.message },
-        { status: 500 }
-      );
+        console.error("Error handling the form submission", error);
+        return NextResponse.json(
+            { message: "Server Error", error: error.message },
+            { status: 500 }
+        );
     }
-  }
 }
