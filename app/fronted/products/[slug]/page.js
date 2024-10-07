@@ -30,13 +30,14 @@ async function Product({ params }) {
     <div className="product_detail">
       <div className="row">
         <div className="col s12 m6">
-          <div
-            className="main-image"
-            id="main-show"
-            style={{
-              backgroundImage: `url(${product.image})`,
-            }}
-          ></div>
+          <Link href={`/fronted/products/${params.slug}/zoomImage`}>
+            <div
+              className="main-image"
+              style={{
+                backgroundImage: `url(${product.image})`,
+              }}
+            ></div>
+          </Link>
           <div className="image-list">
             {[product.image, product.image, product.image, product.image].map(
               (url, index) => (
