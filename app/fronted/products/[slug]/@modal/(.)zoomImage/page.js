@@ -15,7 +15,12 @@ export default function InterceptedZoomInImage({ params }) {
     <>
       <Modal>
         <div className="fullscreen-image">
-          <Image src={productItem.image} alt={productItem.alt} fill />
+          <Image
+            src={productItem.image}
+            alt={productItem.alt}
+            fill
+            className="object-contain"
+          />
         </div>
       </Modal>
     </>

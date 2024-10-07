@@ -158,7 +158,7 @@ async function Product({ params }) {
               <Link href="/product_detail" className="product-item-image">
                 <Image
                   className="responsive-img"
-                  src="/images/product1.jpg"
+                  src="/bath-containers-plant-table.png"
                   alt="自然淨化,環境清潔"
                   width={200}
                   height={200}
