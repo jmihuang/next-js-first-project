@@ -1,4 +1,4 @@
-import NewsList from "@/app/fronted/news/new-list";
+import NewsList from "@/app/(fronted)/news/new-list";
 import { DUMMY_NEWS } from "@/dummy-news";
 export default function LatestNewsPage() {
   return (

@@ -21,10 +21,10 @@ const MainHeader = () => {
             <Link href="/">純粹。很好。</Link>
             <div className="menu-wrapper scoll-down-show">
               <ul className="nav-menu hide-on-med-and-down">
-                <NavLink href="/fronted/about">關於我們</NavLink>
-                <NavLink href="/fronted/products">產品介紹</NavLink>
-                <NavLink href="/fronted/news">最新消息</NavLink>
-                <NavLink href="/fronted/contacts">聯絡我們</NavLink>
+                <NavLink href="/about">關於我們</NavLink>
+                <NavLink href="/products">產品介紹</NavLink>
+                <NavLink href="/news">最新消息</NavLink>
+                <NavLink href="/contacts">聯絡我們</NavLink>
               </ul>
             </div>
             <ul className="nav-cart right">
@@ -64,16 +64,16 @@ const MainHeader = () => {
             </div>
             <ul className="menu">
               <li>
-                <Link href="/fronted/about">關於我們</Link>
+                <Link href="/about">關於我們</Link>
               </li>
               <li>
-                <Link href="/fronted/product">產品介紹</Link>
+                <Link href="/product">產品介紹</Link>
               </li>
               <li>
-                <Link href="/fronted/news">最新消息</Link>
+                <Link href="/news">最新消息</Link>
               </li>
               <li>
-                <Link href="/fronted/contacts">聯絡我們</Link>
+                <Link href="/contacts">聯絡我們</Link>
               </li>
               <li></li>
             </ul>

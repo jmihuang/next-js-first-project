@@ -30,7 +30,7 @@ async function Product({ params }) {
     <div className="product_detail">
       <div className="row">
         <div className="col s12 m6">
-          <Link href={`/fronted/products/${params.slug}/zoomImage`}>
+          <Link href={`/products/${params.slug}/zoomImage`}>
             <div
               className="main-image"
               style={{

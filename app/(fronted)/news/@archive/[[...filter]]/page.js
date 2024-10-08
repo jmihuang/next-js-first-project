@@ -1,4 +1,4 @@
-import NewsList from "@/app/fronted/news/new-list";
+import NewsList from "@/app/(fronted)/news/new-list";
 import Link from "next/link";
 import {
   getAvailableNewsMonths,
@@ -33,7 +33,7 @@ export default function FilteredNewsPage({ params }) {
           }`}
         >
           <Link
-            href="/fronted/news/"
+            href="/news/"
             className={`${
               selectedYear === null ? " text-white bold" : ""
             } px-4 py-2 block`}
@@ -49,7 +49,7 @@ export default function FilteredNewsPage({ params }) {
             }`}
           >
             <Link
-              href={`/fronted/news/${link}`}
+              href={`/news/${link}`}
               className={`${
                 +selectedYear === link ? " text-white bold" : ""
               } px-4 py-2 block`}
@@ -70,7 +70,7 @@ export default function FilteredNewsPage({ params }) {
               }`}
             >
               <Link
-                href={`/fronted/news/${selectedYear}/${link}`}
+                href={`/news/${selectedYear}/${link}`}
                 className={`${
                   +selectedMonth === link ? " text-white bold" : ""
                 } px-4 py-2 block`}
