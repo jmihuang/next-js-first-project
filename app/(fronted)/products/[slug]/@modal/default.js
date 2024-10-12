@@ -1,3 +1,3 @@
 export default function ModalDefaultPage() {
-  return <></>;
+  return null;
 }
