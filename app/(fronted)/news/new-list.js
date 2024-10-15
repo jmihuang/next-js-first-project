@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { DUMMY_NEWS } from "@/dummy-news";
 export default function NewList({ news }) {
   return (
     <>
