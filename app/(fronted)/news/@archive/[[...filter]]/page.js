@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import NewsList from "@/app/(fronted)/news/new-list";
 import Link from "next/link";
 import {
@@ -7,24 +8,37 @@ import {
   getNewsForYear,
   getNewsForYearAndMonth,
 } from "@/lib/news";
+import LoadingSpinner from "@/components/loading-spinner";
+
+async function FilteredNews({ year, month }) {
+  let loadedNews;
+  if (year && month) {
+    loadedNews = await getNewsForYearAndMonth(year, month);
+  }
+  if (year && !month) {
+    loadedNews = await getNewsForYear(year);
+  }
+  if (!year && !month) {
+    loadedNews = await getAllNews();
+  }
+
+  return loadedNews.length > 0 ? (
+    <NewsList news={loadedNews} />
+  ) : (
+    <p>{`${selectedYear ? selectedYear : ""}-${
+      selectedMonth ? selectedMonth : ""
+    } No Posts!`}</p>
+  );
+}
 
 export default async function FilteredNewsPage({ params }) {
   const filter = params?.filter || null;
   const selectedYear = filter?.[0] || null;
   const selectedMonth = filter?.[1] || null;
-  const availableNewsYears = await getAvailableNewsYears();
+  const availableNewsYears = (await getAvailableNewsYears()).map(
+    (item) => item.year
+  );
   const availableNewsMonths = await getAvailableNewsMonths(selectedYear).sort();
-
-  let loadedNews;
-  if (selectedYear && selectedMonth) {
-    loadedNews = await getNewsForYearAndMonth(selectedYear, selectedMonth);
-  }
-  if (selectedYear && !selectedMonth) {
-    loadedNews = await getNewsForYear(selectedYear);
-  }
-  if (!selectedYear && !selectedMonth) {
-    loadedNews = await getAllNews();
-  }
 
   if (
     (selectedYear && !availableNewsYears.includes(selectedYear)) ||
@@ -32,7 +46,6 @@ export default async function FilteredNewsPage({ params }) {
   ) {
     throw new Error("Invalid filter");
   }
-
   return (
     <>
       <ul className="flex flex-wrap mb-6">
@@ -54,16 +67,16 @@ export default async function FilteredNewsPage({ params }) {
           <li
             key={idx}
             className={`border-2 mr-4 cursor-pointer ${
-              selectedYear === item.year ? "bg-primary" : ""
+              selectedYear === item ? "bg-primary" : ""
             }`}
           >
             <Link
-              href={`/news/${item.year}`}
+              href={`/news/${item}`}
               className={`${
-                selectedYear === item.year ? " text-white bold" : ""
+                selectedYear === item ? " text-white bold" : ""
               } px-4 py-2 block`}
             >
-              {item.year}
+              {item}
             </Link>
           </li>
         ))}
@@ -93,13 +106,9 @@ export default async function FilteredNewsPage({ params }) {
             </li>
           ))}
       </ul>
-      {loadedNews.length > 0 ? (
-        <NewsList news={loadedNews} />
-      ) : (
-        <p>{`${selectedYear ? selectedYear : ""}-${
-          selectedMonth ? selectedMonth : ""
-        } No Posts!`}</p>
-      )}
+      <Suspense fallback={<LoadingSpinner />}>
+        <FilteredNews year={selectedYear} month={selectedMonth} />
+      </Suspense>
     </>
   );
 }
