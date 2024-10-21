@@ -25,9 +25,7 @@ async function FilteredNews({ year, month }) {
   return loadedNews.length > 0 ? (
     <NewsList news={loadedNews} />
   ) : (
-    <p>{`${selectedYear ? selectedYear : ""}-${
-      selectedMonth ? selectedMonth : ""
-    } No Posts!`}</p>
+    <p>{`${year ? year : ""}-${month ? month : ""} No Posts!`}</p>
   );
 }
 

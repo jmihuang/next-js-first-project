@@ -28,7 +28,7 @@ db.prepare(
     slug TEXT NOT NULL UNIQUE,
     title TEXT NOT NULL,
     content TEXT NOT NULL,
-    date TEXT NOT NULL,
+    date DATE DEFAULT CURRENT_DATE,
     image TEXT NOT NULL,
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   )
@@ -57,11 +57,11 @@ async function initData() {
 
   // 插入 news 資料
   const newsStmt = db.prepare(`
-  INSERT INTO news (slug, title, content, date, image) VALUES (@slug, @title, @content, @data, @image)
+  INSERT INTO news (slug, title, content, image) VALUES (@slug, @title, @content, @image)
 `);
 
   for (const news of DUMMY_NEWS) {
-    newsStmt.run(news.slug, news.title, news.content, news.date, news.image);
+    newsStmt.run(news);
   }
 }
 
