@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { createPost } from "@/actions/create-post";
+import { createPost } from "@/actions/posts";
 import { useFormStatus, useFormState } from "react-dom";
 import TinyMCEEditor from "@/components/tinymce";
 

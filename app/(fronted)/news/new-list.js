@@ -4,6 +4,10 @@ export default function NewList({ news }) {
   function removeHtmlTags(str) {
     return str.split(/<[^>]*>/).join("");
   }
+
+  function isHttps(url) {
+    return url.startsWith("https://");
+  }
   return (
     <>
       {news.map((item, idx) => (
@@ -17,7 +21,7 @@ export default function NewList({ news }) {
               alt={item.title || "Image"} // Fallback alt if title is undefined
               width={269}
               height={180}
-              src={`/${item.image}`} // Ensure item.image is a valid URL or path
+              src={isHttps(item.image) ? item.image : `/${item.image}`} // Ensure item.image is a valid URL or path
               priority={true} // Optional: add priority if the image is critical for the layout
             />
           </div>

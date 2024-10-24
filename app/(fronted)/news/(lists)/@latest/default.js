@@ -3,7 +3,7 @@ import { getLatestNews } from "@/lib/news";
 
 export default async function LatestNewsPage() {
   const news = await getLatestNews();
-
+  console.log(news);
   return (
     <>
       <h5>Latest News</h5>
