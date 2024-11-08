@@ -30,6 +30,10 @@ const items2 = [
     label: "最新消息",
     children: [
       {
+        key: "/admin/news/dataIndex",
+        label: <Link href="/admin/news/data-index">最新消息列表</Link>,
+      },
+      {
         key: "/admin/news/create",
         label: <Link href="/admin/news/create">新增最新消息</Link>,
       },
